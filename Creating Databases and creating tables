@@ -1,0 +1,44 @@
+CREATE DATABASE student_attendance_system;
+USE student_attendance_system;
+
+-- Department Table
+CREATE TABLE department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(100) NOT NULL
+);
+
+-- Student Table
+CREATE TABLE student (
+    std_id INT PRIMARY KEY,
+    std_name VARCHAR(100) NOT NULL,
+    std_email VARCHAR(100) UNIQUE NOT NULL,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES department(dept_id)
+);
+
+-- Course Table
+CREATE TABLE course (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES department(dept_id)
+);
+
+-- Class Table
+CREATE TABLE class (
+    class_id INT PRIMARY KEY,
+    course_id INT,
+    date DATE,
+    faculty_name VARCHAR(100),
+    FOREIGN KEY (course_id) REFERENCES course(course_id)
+);
+
+-- Attendance Table
+CREATE TABLE attendance (
+    atd_id INT PRIMARY KEY,
+    std_id INT,
+    class_id INT,
+    status ENUM('present', 'absent') NOT NULL,
+    FOREIGN KEY (std_id) REFERENCES student(std_id),
+    FOREIGN KEY (class_id) REFERENCES class(class_id)
+);
