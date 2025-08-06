@@ -1,0 +1,55 @@
+# INSERTING DATA INTO TABLES
+
+-- Department
+INSERT INTO department (dept_id, dept_name) VALUES (1, 'Computer Science'), (2, 'Mechnical');
+
+-- Student
+INSERT INTO student (std_id, std_name, std_email, dept_id) 
+VALUES 
+(101, 'bala', 'bala@gmail.com', 1),
+(102, 'bhargavi', 'bhargavi@gmail.com', 2);
+
+-- Course
+INSERT INTO course (course_id, course_name, dept_id) 
+VALUES 
+(201, 'DBMS', 1),
+(202, 'Thermodynamics', 2);
+
+-- Class
+INSERT INTO class (class_id, course_id, date, faculty_name) 
+VALUES 
+(301, 201, '2025-08-01', 'Prof. Ramesh'),
+(302, 202, '2025-08-02', 'Dr. Swathi');
+
+-- Attendance
+INSERT INTO attendance (atd_id, std_id, class_id, status) 
+VALUES 
+(401, 101, 301, 'present'),
+(402, 102, 302, 'absent');
+
+
+
+# SELECTING ALL ROWS IN ALL TABLES
+
+SELECT * FROM department;
+SELECT * FROM student;
+SELECT * FROM course;
+SELECT * FROM class;
+SELECT * FROM attendance;
+
+
+
+# UPDATING DATA IN THE TABLES
+
+-- Update student email
+UPDATE student SET std_email = 'bala05@gmail.com' WHERE std_id = 101;
+
+-- Update attendance status
+UPDATE attendance SET status = 'present' WHERE std_id = 101 AND class_id = 302;
+
+
+
+#DELETING DATA
+-- Delete attendance record
+DELETE FROM attendance WHERE atd_id = 402;
+
