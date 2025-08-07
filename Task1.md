@@ -1,63 +1,66 @@
-# SQL
 # Creation of Database and Table for Student Attendance System
 The database student_attendance_system was created and used to define five core relational tables: department, student, course, class, and attendance.
 
-✅ 1. Creating the Database
+## 1. Creating the Database
 
-    - USE student_attendance_system;
+```sql
+USE student_attendance_system;
+```
 
 This command switches to the working database.
 
-✅ 2. Creating Tables
+## 2. Creating Tables
 
-  -- Department Table
+#### Department Table
+```sql
+CREATE TABLE department (dept_id INT PRIMARY KEY,dept_name VARCHAR(100) NOT NULL);
+```  
+- dept_id: Primary Key
   
-       - CREATE TABLE department (dept_id INT PRIMARY KEY,dept_name VARCHAR(100) NOT NULL);
-  
-  dept_id: Primary Key
-  
-  dept_name: Department name (non-null)
-  
-  
-  
-  -- Student Table
-  
-      - CREATE TABLE student (std_id INT PRIMARY KEY,std_name VARCHAR(100) NOT NULL,std_email VARCHAR(100) UNIQUE NOT NULL,dept_id INT,FOREIGN KEY (dept_id) REFERENCES department(dept_id));
-  
-  References department table,
-  
-  Email is unique,
-  
-  Foreign key on dept_id.
-  
-  
-  
-  -- Course Table
-  
-      - CREATE TABLE course (course_id INT PRIMARY KEY,course_name VARCHAR(100) NOT NULL,dept_id INT,FOREIGN KEY (dept_id) REFERENCES department(dept_id));
-  
-  Each course is linked to a department
-  
-  
-  
-  
-  -- Class Table
-  
-      - CREATE TABLE class (class_id INT PRIMARY KEY,course_id INT,date DATE,faculty_name VARCHAR(100),FOREIGN KEY (course_id) REFERENCES course(course_id));
-  
-  Class refers to a course and includes date and faculty name
-  
-  
-  
-  -- Attendance Table
-  
-      - CREATE TABLE attendance (atd_id INT PRIMARY KEY,std_id INT,class_id INT,status ENUM('present', 'absent') NOT NULL,FOREIGN KEY (std_id) REFERENCES student(std_id),FOREIGN KEY (class_id) REFERENCES class(class_id));
+- dept_name: Department name (non-null)
 
-Tracks attendance status per student per class
+#### Student Table
 
-Foreign keys connect it to student and class
+```sql
+CREATE TABLE student (std_id INT PRIMARY KEY,std_name VARCHAR(100) NOT NULL,std_email VARCHAR(100) UNIQUE NOT NULL,dept_id INT,FOREIGN KEY (dept_id) REFERENCES department(dept_id));
+```
+  
+  - References department table,
+  
+  - Email is unique,
+  
+ -  Foreign key on dept_id.
+  
+  
+#### Course Table
+  ```sql
+CREATE TABLE course (course_id INT PRIMARY KEY,course_name VARCHAR(100) NOT NULL,dept_id INT,FOREIGN KEY (dept_id) REFERENCES department(dept_id));
+  ```
 
-📋 Schema (Query: SHOW TABLES)
+  - Each course is linked to a department
+  
+  
+  
+  
+#### Class Table
+```sql  
+CREATE TABLE class (class_id INT PRIMARY KEY,course_id INT,date DATE,faculty_name VARCHAR(100),FOREIGN KEY (course_id) REFERENCES course(course_id));
+```
+
+- Class refers to a course and includes date and faculty name
+  
+  
+  
+#### Attendance Table
+```sql  
+CREATE TABLE attendance (atd_id INT PRIMARY KEY,std_id INT,class_id INT,status ENUM('present', 'absent') NOT NULL,FOREIGN KEY (std_id) REFERENCES student(std_id),FOREIGN KEY (class_id) REFERENCES class(class_id));
+```
+
+- Tracks attendance status per student per class
+
+- Foreign keys connect it to student and class
+
+### Schema (Query: SHOW TABLES)
 
 - Shows all five tables created:
 
@@ -76,7 +79,7 @@ Foreign keys connect it to student and class
 
 
 
-✅ Output
+### Output
 The database student_attendance_system was successfully created.
 
 - Five tables were created:
@@ -97,7 +100,7 @@ department, student, course, class, and attendance.
 
 
 
-🗂️ ER Diagram
+### ER Diagram
 
 The ER (Entity-Relationship) diagram visually represents the logical structure of the Student Attendance System. It highlights the key entities and their relationships:
 
@@ -150,7 +153,7 @@ Attendance
 - This design ensures normalized data storage, avoids redundancy, and supports efficient queries related to attendance tracking.
 
 
-✅ Summary
+### Summary
 
 + This schema ensures data normalization and clear entity relationships.
 
