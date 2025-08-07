@@ -1,0 +1,45 @@
+# Task 3: Writing Basic SELECT Queries
+
+-- 1. View all data in attendance table
+    - SELECT * FROM attendance;
+
+-- 2. View all data in class table
+    - SELECT * FROM class;
+
+-- 3. View all data in course table
+    - SELECT * FROM course;
+
+-- 4. View all data in student table
+    - SELECT * FROM student;
+
+-- 5. View all data in department table
+    - SELECT * FROM department;
+
+-- 6. Using WHERE Command
+    - SELECT * FROM attendance WHERE std_id = 101;
+
+    - SELECT * FROM attendance WHERE status = 'absent';
+
+    - SELECT * FROM course WHERE dept_id = 2;
+
+-- 7. Using WHERE and AND Commands
+    - SELECT * FROM attendance WHERE status = 'absent' AND std_id = 103;
+
+-- 8. Using ORDER BY Command
+    - SELECT * FROM attendance ORDER BY class_id;
+
+-- 9. Using ORDER BY with DESC to sort the data in descending Order
+    - SELECT * FROM attendance ORDER BY class_id DESC;
+
+-- 10. Using ORDER BY with ASC to sort in ascending Order
+    - SELECT * FROM attendance ORDER BY std_id ASC;
+
+-- 11. Using LIMIT Command with ORDER BY, DESC, ASC Commands 
+    - SELECT * FROM attendance ORDER BY std_id ASC LIMIT 5;
+
+    - SELECT * FROM attendance ORDER BY class_id LIMIT 5;
+
+-- 12. Using BETWEEN Command
+    - SELECT * FROM class WHERE date BETWEEN '2025-08-01' AND '2025-08-03';
+
+    - SELECT * FROM attendance WHERE atd_id BETWEEN 401 AND 405;
