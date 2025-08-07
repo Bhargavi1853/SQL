@@ -4,6 +4,11 @@ The database student_attendance_system was created and used to define five core 
 ## 1. Creating the Database
 
 ```sql
+CREATE DATABASE student_attendance_system;
+```
+- This Query will create a Database named student_attendance_system.
+
+```sql
 USE student_attendance_system;
 ```
 
