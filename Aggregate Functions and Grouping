@@ -1,0 +1,115 @@
+- create marks table 
+
+CREATE TABLE marks (
+    mark_id INT PRIMARY KEY AUTO_INCREMENT,
+    std_id INT,
+    course_id INT,
+    marks_obtained FLOAT,
+    FOREIGN KEY (std_id) REFERENCES student(std_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id)
+);
+
+
+-- insert rows in marks table
+
+INSERT INTO marks (std_id, course_id, marks_obtained) VALUES
+(101, 201, 42),
+(101, 203, 35),
+(102, 202, 44),
+(102, 204, 40),
+(102, 210, 38),
+(103, 205, 46),
+(103, 207, 41),
+(104, 203, 36),
+(104, 209, 39),
+(105, 206, 45),
+(105, 208, 43);
+
+
+-- verify
+
+SELECT * FROM marks;
+
+
+-- 1. Count total students in each department
+
+SELECT d.dept_name, COUNT(s.std_id) AS total_students
+FROM department d
+JOIN student s ON d.dept_id = s.dept_id
+GROUP BY d.dept_name;
+
+-- 2. Count total classes conducted for each course
+
+SELECT c.course_name, COUNT(cl.class_id) AS total_classes
+FROM course c
+JOIN class cl ON c.course_id = cl.course_id
+GROUP BY c.course_name;
+
+-- 3. Count attendance status per course
+
+SELECT c.course_name, a.status, COUNT(a.atd_id) AS total
+FROM attendance a
+JOIN class cl ON a.class_id = cl.class_id
+JOIN course c ON cl.course_id = c.course_id
+GROUP BY c.course_name, a.status;
+
+-- 4. Average marks obtained in each course
+
+SELECT c.course_name, AVG(m.marks_obtained) AS avg_marks
+FROM marks m
+JOIN course c ON m.course_id = c.course_id
+GROUP BY c.course_name;
+
+-- 5. Total marks per student
+
+SELECT s.std_name, SUM(m.marks_obtained) AS total_marks
+FROM student s
+JOIN marks m ON s.std_id = m.std_id
+GROUP BY s.std_name;
+
+-- 6. Students with average marks above 40 (HAVING example)
+
+SELECT s.std_name, AVG(m.marks_obtained) AS avg_marks
+FROM student s
+JOIN marks m ON s.std_id = m.std_id
+GROUP BY s.std_name
+HAVING AVG(m.marks_obtained) > 40;
+
+-- 7. Students who attended more than 2 classes (HAVING example)
+
+SELECT s.std_name, COUNT(a.atd_id) AS total_present
+FROM student s
+JOIN attendance a ON s.std_id = a.std_id
+WHERE a.status = 'present'
+GROUP BY s.std_name
+HAVING COUNT(a.atd_id) > 2;
+
+-- 8. Count total presents per student
+
+SELECT s.std_name, COUNT(a.atd_id) AS presents
+FROM student s
+JOIN attendance a ON s.std_id = a.std_id
+WHERE a.status = 'present'
+GROUP BY s.std_name;
+
+-- 9. Count total absents per student
+
+SELECT s.std_name, COUNT(a.atd_id) AS absents
+FROM student s
+JOIN attendance a ON s.std_id = a.std_id
+WHERE a.status = 'absent'
+GROUP BY s.std_name;
+
+-- 10. Highest marks obtained in each course
+
+SELECT c.course_name, MAX(m.marks_obtained) AS highest_marks
+FROM marks m
+JOIN course c ON m.course_id = c.course_id
+GROUP BY c.course_name;
+
+-- 11. Lowest marks obtained in each course
+
+SELECT c.course_name, MIN(m.marks_obtained) AS lowest_marks
+FROM marks m
+JOIN course c ON m.course_id = c.course_id
+GROUP BY c.course_name;
