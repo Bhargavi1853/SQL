@@ -1,0 +1,74 @@
+Task 6 – SQL Subqueries and Nested Queries
+
+1. Scalar Subquery (Single Value Result)
+
+- Find students who scored above the average marks.
+
+SELECT s.std_name, m.marks_obtained
+FROM student s
+JOIN marks m ON s.std_id = m.std_id
+WHERE m.marks_obtained > (SELECT AVG(marks_obtained) FROM marks);
+
+2. Subquery in WHERE with IN
+
+- Find students who are enrolled in courses under the Computer Science department.
+
+SELECT std_name
+FROM student
+WHERE dept_id IN (
+    SELECT dept_id FROM department WHERE dept_name = 'Computer Science'
+);
+
+3. Subquery with EXISTS
+
+- Find students who have at least one absent record in attendance.
+
+SELECT s.std_name
+FROM student s
+WHERE EXISTS (
+    SELECT 1
+    FROM attendance a
+    WHERE a.std_id = s.std_id AND a.status = 'absent'
+);
+
+4. Correlated Subquery
+
+- Find students who scored the highest marks in at least one course.
+
+SELECT s.std_name, m.course_id, m.marks_obtained
+FROM student s
+JOIN marks m ON s.std_id = m.std_id
+WHERE m.marks_obtained = (
+    SELECT MAX(m2.marks_obtained)
+    FROM marks m2
+    WHERE m2.course_id = m.course_id
+);
+
+
+5. Subquery in FROM (Derived Table)
+
+- Find the average marks per student using a derived table.
+
+SELECT sub.std_id, s.std_name, sub.avg_marks
+FROM (
+    SELECT std_id, AVG(marks_obtained) AS avg_marks
+    FROM marks
+    GROUP BY std_id
+) AS sub
+JOIN student s ON sub.std_id = s.std_id;
+
+
+6. Nested Subquery (Multiple Levels)
+
+- Find students whose marks are above the overall average of their department.
+
+SELECT s.std_name, m.marks_obtained, d.dept_name
+FROM student s
+JOIN marks m ON s.std_id = m.std_id
+JOIN department d ON s.dept_id = d.dept_id
+WHERE m.marks_obtained > (
+    SELECT AVG(m2.marks_obtained)
+    FROM marks m2
+    JOIN student s2 ON m2.std_id = s2.std_id
+    WHERE s2.dept_id = s.dept_id
+);
