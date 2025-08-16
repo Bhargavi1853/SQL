@@ -83,3 +83,12 @@ Find students whose marks are above the **average of their department**.
 - Learned to filter and derive results efficiently using nested query logic.
 
 - Built strong foundations for advanced SQL interview questions.
+
+
+
+<img width="693" height="372" alt="Screenshot 2025-08-16 173920" src="https://github.com/user-attachments/assets/a48601fb-a465-409d-a610-2040232d705d" />
+<img width="772" height="351" alt="Screenshot 2025-08-16 173855" src="https://github.com/user-attachments/assets/bf0995f5-2228-47c0-9b95-fb7d3b66fd98" />
+<img width="637" height="473" alt="Screenshot 2025-08-16 173830" src="https://github.com/user-attachments/assets/62f8dcce-4635-40af-9401-7fa52ae5d7a5" />
+<img width="654" height="561" alt="Screenshot 2025-08-16 173801" src="https://github.com/user-attachments/assets/39b2a838-2d76-4c99-8a2e-bf09735ef2c9" />
+<img width="675" height="451" alt="Screenshot 2025-08-16 173723" src="https://github.com/user-attachments/assets/69e236f5-8875-4604-b87e-2e39a5cc9863" />
+<img width="635" height="559" alt="Screenshot 2025-08-16 173651" src="https://github.com/user-attachments/assets/4c2c4f9d-034a-4c52-b07c-aebd342f8228" />
