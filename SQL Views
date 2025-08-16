@@ -1,0 +1,102 @@
+Task 7 – SQL Views
+
+This task demonstrates the creation and usage of SQL Views in the Student Attendance System database. Views simplify complex queries and provide abstraction for better data management.
+
+1. Create a View for Student Marks
+
+CREATE VIEW student_marks_view AS
+SELECT 
+    s.std_id,
+    s.std_name,
+    c.course_name,
+    m.marks_obtained
+FROM marks m
+JOIN student s ON m.std_id = s.std_id
+JOIN course c ON m.course_id = c.course_id;
+
+- Purpose: Shows each student’s marks along with course details.
+
+
+
+2. Create a View for Student Attendance
+
+CREATE VIEW student_attendance_view AS
+SELECT 
+    s.std_id,
+    s.std_name,
+    c.course_name,
+    a.status
+FROM attendance a
+JOIN class cl ON a.class_id = cl.class_id
+JOIN course c ON cl.course_id = c.course_id
+JOIN student s ON a.std_id = s.std_id;
+
+- Purpose: Displays attendance status (present/absent) for every student in each course.
+
+
+
+3. Department-Wise Student Summary
+
+CREATE VIEW department_summary_view AS
+SELECT 
+    d.dept_name,
+    COUNT(s.std_id) AS total_students,
+    AVG(m.marks_obtained) AS avg_marks
+FROM department d
+JOIN student s ON d.dept_id = s.dept_id
+JOIN marks m ON s.std_id = m.std_id
+GROUP BY d.dept_name;
+
+- Purpose: Summarizes student strength and performance at the department level.
+
+
+
+4. View for High Performers (Above 40 Marks Avg)
+
+CREATE VIEW high_performers_view AS
+SELECT 
+    s.std_id,
+    s.std_name,
+    AVG(m.marks_obtained) AS avg_marks
+FROM student s
+JOIN marks m ON s.std_id = m.std_id
+GROUP BY s.std_id, s.std_name
+HAVING AVG(m.marks_obtained) > 40;
+
+- Purpose: Lists only students performing above the average threshold (40 marks).
+
+
+
+5. Attendance Percentage per Student
+
+CREATE VIEW attendance_percentage_view AS
+SELECT 
+    s.std_id,
+    s.std_name,
+    SUM(CASE WHEN a.status = 'present' THEN 1 ELSE 0 END) * 100 / COUNT(*) AS attendance_percentage
+FROM student s
+JOIN attendance a ON s.std_id = a.std_id
+GROUP BY s.std_id, s.std_name;
+
+- Purpose: Calculates the percentage of classes attended by each student.
+
+
+
+6. Drop a View
+
+DROP VIEW IF EXISTS high_performers_view;
+
+- Purpose: Removes a view from the database if no longer needed.
+
+
+
+7. Update Security – Restrict View with WITH CHECK OPTION
+
+CREATE VIEW cs_students_view AS
+SELECT std_id, std_name, dept_id
+FROM student
+WHERE dept_id = 1
+WITH CHECK OPTION;
+
+
+- Purpose: Ensures only Computer Science students are visible and inserted through this view.
