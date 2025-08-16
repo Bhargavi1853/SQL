@@ -1,0 +1,206 @@
+Task 5 – SQL Joins 
+
+1. INNER JOIN – Students with Departments
+
+SELECT 
+    s.std_id,
+    s.std_name,
+    d.dept_name
+FROM student s
+INNER JOIN department d 
+    ON s.dept_id = d.dept_id;
+
+
+- Returns only students that have a matching department.
+
+2. INNER JOIN – Courses with Departments
+
+SELECT 
+    c.course_id,
+    c.course_name,
+    d.dept_name
+FROM course c
+INNER JOIN department d 
+    ON c.dept_id = d.dept_id;
+
+
+- Returns courses and the departments they belong to.
+
+3. INNER JOIN – Classes with Course Names
+
+SELECT 
+    cl.class_id,
+    c.course_name,
+    cl.date
+FROM class cl
+INNER JOIN course c 
+    ON cl.course_id = c.course_id;
+
+
+- Lists all classes and their course names.
+
+4. INNER JOIN – Attendance with Student Names and Course Names
+
+SELECT 
+    a.atd_id,
+    s.std_name,
+    c.course_name,
+    a.status
+FROM attendance a
+INNER JOIN student s 
+    ON a.std_id = s.std_id
+INNER JOIN class cl 
+    ON a.class_id = cl.class_id
+INNER JOIN course c 
+    ON cl.course_id = c.course_id;
+
+
+- Shows attendance with full student and course details.
+
+5. INNER JOIN – Marks with Student and Course Names
+
+SELECT 
+    m.mark_id,
+    s.std_name,
+    c.course_name,
+    m.marks_obtained
+FROM marks m
+INNER JOIN student s 
+    ON m.std_id = s.std_id
+INNER JOIN course c 
+    ON m.course_id = c.course_id;
+
+
+- Displays marks along with student names and course names.
+
+LEFT JOINS (Keep all records from the first table, even if no match)
+
+6. LEFT JOIN – Students and Departments
+
+SELECT 
+    s.std_name,
+    d.dept_name
+FROM student s
+LEFT JOIN department d 
+    ON s.dept_id = d.dept_id;
+
+
+- Shows all students even if their department is missing.
+
+7. LEFT JOIN – Courses and Departments
+
+SELECT 
+    c.course_name,
+    d.dept_name
+FROM course c
+LEFT JOIN department d 
+    ON c.dept_id = d.dept_id;
+
+
+- Displays all courses even if their department is not assigned.
+
+8. LEFT JOIN – Students with Attendance
+
+SELECT 
+    s.std_name,
+    a.status
+FROM student s
+LEFT JOIN attendance a 
+    ON s.std_id = a.std_id;
+
+
+- Shows all students, marking NULL for those without attendance.
+
+9. LEFT JOIN – Students with Marks
+
+SELECT 
+    s.std_name,
+    m.course_id,
+    m.marks_obtained
+FROM student s
+LEFT JOIN marks m 
+    ON s.std_id = m.std_id;
+
+
+- Displays all students and their marks if available.
+
+RIGHT JOINS (Keep all records from the second table, even if no match. In MySQL, RIGHT JOIN is just LEFT JOIN with reversed order.)
+
+10. RIGHT JOIN – Students and Departments
+
+SELECT 
+    s.std_name,
+    d.dept_name
+FROM department d
+RIGHT JOIN student s 
+    ON s.dept_id = d.dept_id;
+
+
+- Shows all students regardless of department match.
+
+11. RIGHT JOIN – Courses and Departments
+
+SELECT 
+    c.course_name,
+    d.dept_name
+FROM department d
+RIGHT JOIN course c 
+    ON c.dept_id = d.dept_id;
+
+
+- Shows all courses regardless of department match.
+
+12. RIGHT JOIN – Marks and Students
+
+SELECT 
+    s.std_name,
+    m.marks_obtained
+FROM marks m
+RIGHT JOIN student s 
+    ON m.std_id = s.std_id;
+
+
+- Shows all students with their marks if recorded.
+
+FULL OUTER JOIN (Not supported directly in MySQL — use UNION)
+
+13. FULL JOIN – Students and Marks
+SELECT 
+    s.std_name,
+    m.course_id,
+    m.marks_obtained
+FROM student s
+LEFT JOIN marks m 
+    ON s.std_id = m.std_id
+UNION
+SELECT 
+    s.std_name,
+    m.course_id,
+    m.marks_obtained
+FROM student s
+RIGHT JOIN marks m 
+    ON s.std_id = m.std_id;
+
+
+- Combines students with marks from both sides, showing NULL where data is missing.
+
+14. FULL JOIN – Courses and Classes
+
+SELECT 
+    c.course_name,
+    cl.class_id,
+    cl.date
+FROM course c
+LEFT JOIN class cl 
+    ON c.course_id = cl.course_id
+UNION
+SELECT 
+    c.course_name,
+    cl.class_id,
+    cl.date
+FROM course c
+RIGHT JOIN class cl 
+    ON c.course_id = cl.course_id;
+
+
+- Combines all courses and classes, including those without matches.
