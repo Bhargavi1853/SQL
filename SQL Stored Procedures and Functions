@@ -1,0 +1,105 @@
+Stored Procedures and Functions Queries
+1. Stored Procedure – Get Attendance of a Student
+
+DELIMITER $$
+
+CREATE PROCEDURE GetAttendanceByStudent(IN student_id INT)
+BEGIN
+    SELECT 
+        s.std_id,
+        s.std_name,
+        c.course_name,
+        a.status
+    FROM student s
+    JOIN attendance a ON s.std_id = a.std_id
+    JOIN class cl ON a.class_id = cl.class_id
+    JOIN course c ON cl.course_id = c.course_id
+    WHERE s.std_id = student_id;
+END $$
+
+DELIMITER ;
+
+
+Call the procedure:
+
+CALL GetAttendanceByStudent(101);
+
+
+2. Stored Procedure – Insert Marks for a Student
+
+DELIMITER $$
+
+CREATE PROCEDURE InsertStudentMarks(
+    IN student_id INT,
+    IN course_id INT,
+    IN marks FLOAT
+)
+BEGIN
+    INSERT INTO marks (std_id, course_id, marks_obtained)
+    VALUES (student_id, course_id, marks);
+END $$
+
+DELIMITER ;
+
+
+Call the procedure:
+
+CALL InsertStudentMarks(101, 201, 45);
+
+
+3. Stored Function – Get Average Marks of a Student
+
+DELIMITER $$
+
+CREATE FUNCTION GetAverageMarks(student_id INT) 
+RETURNS FLOAT
+DETERMINISTIC
+BEGIN
+    DECLARE avg_marks FLOAT;
+    SELECT AVG(marks_obtained) INTO avg_marks
+    FROM marks
+    WHERE std_id = student_id;
+    RETURN avg_marks;
+END $$
+
+DELIMITER ;
+
+
+Use the function:
+
+SELECT GetAverageMarks(101) AS avg_marks;
+
+
+
+4. Stored Function – Total Presents of a Student
+
+DELIMITER $$
+
+CREATE FUNCTION GetTotalPresents(student_id INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE total_present INT;
+    SELECT COUNT(*) INTO total_present
+    FROM attendance
+    WHERE std_id = student_id AND status = 'present';
+    RETURN total_present;
+END $$
+
+DELIMITER ;
+
+
+Use the function:
+
+SELECT GetTotalPresents(102) AS presents;
+
+
+These procedures & functions will let you:
+
+- View attendance by student
+
+- Insert new marks
+
+- Get average marks of a student
+
+- Get total presents in attendance
